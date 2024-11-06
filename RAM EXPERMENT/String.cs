@@ -9,21 +9,25 @@ namespace RAM_EXPERMENT
     public class String
     {
         int x = 0;
-        int y = 0;
         public String(string s) {
-            this.x = Ram.Offset;
-            this.y = s.Length + Ram.Offset;
-            for (int c = this.x; c < this.y; c++) {
-                Ram.Write(c, s[c - this.x]);
+            x = Ram.Offset;
+            int y = s.Length + Ram.Offset;
+            for (int c = x; c < y; c++) {
+                Ram.Write(c, s[c - x]);
             }
-            Ram.Write(this.y, null);
+            Ram.Write(y, null);
 
         }
 
         public void PrintString() {
-            for (int c = this.x; c < this.y; c++)
+            for (int c = x; true; c++)
             {
-                Console.Write(Ram.Read(c));
+                char? buffer = Ram.Read(c);
+                if (buffer == null)
+                {
+                    break;
+                }
+                Console.Write(buffer);
             }
             Console.WriteLine();
         }
